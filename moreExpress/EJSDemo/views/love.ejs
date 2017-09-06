@@ -1,0 +1,19 @@
+<!-- Including my templates -->
+<% include partials/header %>
+<!-- <%=  %> -> Parameter for getting the JavaScript Data for EJS -->
+<h1>You feel in love with: <%= nameVar %> </h1>
+
+
+<% if(nameVar == 'rusty'){ %>
+    <p>Good Choice!</p>
+<% } else { %>
+    <p>Not a good choice</p>
+<% } %>
+
+<% include partials/footer %>
+
+<!--
+<%= %> - Tag -> Thing that will be added to HTML / Display on HTML
+<% %> - Tag -> When is doing logic stuffs or Loop's or control flow
+-->
+
