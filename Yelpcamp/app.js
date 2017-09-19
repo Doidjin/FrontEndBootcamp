@@ -7,7 +7,7 @@ app.set('view engine', 'ejs');
 
 var campgrounds = [
     {name: 'Salmon Creek', image: 'http://blog.cremonesi.com.br/wp-content/uploads/2017/03/camping-voyageurs-national-park-tent.jpg.rend_.tccom_.1280.960.jpeg'},
-    {name: 'Granite Hill', image: 'http://s3.amazonaws.com/ncc-ccn/images/camping-card.jpg?mtime=20170425165109'},
+    {name: 'Granite Hill', image: 'https://www.fs.usda.gov/Internet/FSE_MEDIA/stelprdb5115588.jpg'},
     {name: 'Mountain Goats rest', image: 'http://blog.lojadecamping.com.br/wp-content/uploads/caaaam.jpg'}
 ];
 
