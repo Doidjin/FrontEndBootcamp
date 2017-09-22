@@ -1,42 +1,91 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+//Creating the Connection
+mongoose.connect('mongodb://localhost/yelp_camp');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
-var campgrounds = [
-    {name: 'Salmon Creek', image: 'http://blog.cremonesi.com.br/wp-content/uploads/2017/03/camping-voyageurs-national-park-tent.jpg.rend_.tccom_.1280.960.jpeg'},
-    {name: 'Granite Hill', image: 'https://www.fs.usda.gov/Internet/FSE_MEDIA/stelprdb5115588.jpg'},
-    {name: 'Mountain Goats rest', image: 'http://blog.lojadecamping.com.br/wp-content/uploads/caaaam.jpg'}
-];
+
+//Setting up the Schema
+var campgroundSchema = new mongoose.Schema({
+   name: String,
+   image: String,
+   description: String
+});
+
+//Setting the Model
+var Campground = mongoose.model('Campground', campgroundSchema);
+
+/*
+//Setting the Creates
+Campground.create({
+    name: 'Mountain Goats rest',
+    image: 'http://blog.lojadecamping.com.br/wp-content/uploads/caaaam.jpg',
+    description: 'This is a hude Mountain Goats rest!'
+}, function(err, campground){
+    if(err)
+        console.log(err);
+    else
+        console.log(campground);
+});
+*/
+
 
 //Root path
 app.get('/', function(req, res){
     res.render('landing');
 });
 
+//POST - Add a new campground for DB
 app.get('/campgrounds', function(req, res){
-    res.render('campgrounds', {campgrounds: campgrounds});
+    //Getting the campgrounds from de DB
+    Campground.find({}, function(err, allCampgrounds){
+        if(err)
+            console.log(err);
+        else
+            res.render('index', {campgrounds: allCampgrounds});
+    });
 });
 
+//INDEX - Display a list of all campgrounds
 app.post('/campgrounds', function(req, res){
     var name = req.body.name;
     var image = req.body.image;
+    var description = req.body.description;
     
     var newCampgroud ={
       name: name,
-      image: image
+      image: image,
+      description: description
     };
     
-    campgrounds.push(newCampgroud);
-    //get data from form and add to campgrouds array
-    //redirect back to campgrouds
-    res.redirect('/campgrounds');
+    Campground.create(newCampgroud, function(err, callbackNewCampground){
+        if(err)
+            console.log(err)
+        else
+            res.redirect('/campgrounds');
+    });
 });
 
+//NEW - Display form to make a new campground
 app.get('/campgrounds/new', function(req, res){
     res.render('new');
+});
+
+//Show - Show info about one campground
+app.get('/campgrounds/:id', function(req, res){
+    
+    Campground.findById(req.params.id, function(err, campgroundId){
+        if(err)
+            console.log(err);
+        else
+            //Render the template with the campgrounds id
+            res.render('show', {campground: campgroundId});
+    });
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
