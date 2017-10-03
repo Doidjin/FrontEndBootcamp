@@ -10,3 +10,5 @@ name | url | verb | desc
 *NEW* | /campgrounds/new | GET | Display form to make a new campground
 *CREATE* | /campgrounds  | POST | Add a new campground for DB
 *SHOW*  | /campgrounds/:id | GET | Show info about one campground
+*EDIT*  | /campgrounds/:id/edit | GET | Show edit form for one campground
+*UPDATE* | /campgrounds/:id     | PUT | Update a particular campground, then redirect to somewhere
