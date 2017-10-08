@@ -60,7 +60,7 @@ app.get('/blogs/new', function(req, res){
 
 //CREATE ROUTE
 app.post('/blogs', function(req, res){
-   req.body.blog.body = req.sanitizer(req.body.blog.body);
+   req.body.blog.body = req.sanitize(req.body.blog.body);
    Blog.create(req.body.blog, function(err, newBlog){
         if(err)
             console.log(err);
