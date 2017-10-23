@@ -13,23 +13,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
 
-
-
-/*
-//Setting the Creates
-Campground.create({
-    name: 'Mountain Goats rest',
-    image: 'http://blog.lojadecamping.com.br/wp-content/uploads/caaaam.jpg',
-    description: 'This is a hude Mountain Goats rest!'
-}, function(err, campground){
-    if(err)
-        console.log(err);
-    else
-        console.log(campground);
-});
-*/
-
-
 //Root path
 app.get('/', function(req, res){
     res.render('landing');
@@ -74,7 +57,7 @@ app.get('/campgrounds/new', function(req, res){
 //Show - Show info about one campground
 app.get('/campgrounds/:id', function(req, res){
     
-    Campground.findById(req.params.id, function(err, campgroundId){
+    Campground.findById(req.params.id).populate('comments').exec(function(err, campgroundId){
         if(err)
             console.log(err);
         else
