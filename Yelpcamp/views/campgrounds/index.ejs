@@ -1,6 +1,5 @@
 <!-- Including my templates -->
-<% include partials/header %>
-
+<% include ../partials/header %>
 <div class="container">
     <header class="jumbotron">
         <div class="container">
@@ -11,10 +10,10 @@
         </div>
     </header>
 
-    <div class="row text-center" style="display: flex; flax-wrap: wrap"> 
+    <div class="row text-center" style="display: flex; flax-wrap: wrap;"> 
         <% campgrounds.forEach(function(campground){ %>
         <div class="row align-items-center">
-           <div class="col col-3">
+           <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
                     <img src="<%= campground.image %>">
                     <div class="caption">
@@ -34,4 +33,4 @@
 
 
 
-<% include partials/footer %>
+<% include ../partials/footer %>
