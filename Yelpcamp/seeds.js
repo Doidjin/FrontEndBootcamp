@@ -16,27 +16,28 @@ var data = [
     ];
 
 function seedDB(){
-    //Remove all campgrounds
+//    Remove all campgrounds
     Campground.remove({}, function(err){
-        if(err)
-            console.log(err);
+        if(err){
+           console.log(err);
+        }
         console.log('removed campgrounds');
         //Add a few campgrounds
         data.forEach(function(seed){
             Campground.create(seed, function(err, campground){
                 if(err)
                     console.log(err);
-                console.log('Added a campground');
-                //Create a comment
+               console.log('Added a campground');
+               //Create a comment
                 Comment.create(
                         {
                             text: 'Teste 3',
                             author: 'Teste 4'
                         }, function(err, comment){
                             if(err)
-                                console.log(err);
+                               console.log(err);
                             campground.comments.push(comment);
-                            campground.save();
+                           campground.save();
                             console.log('Created new comments');
                         });
              });
