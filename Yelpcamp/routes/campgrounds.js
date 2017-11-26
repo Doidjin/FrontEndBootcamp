@@ -3,14 +3,15 @@ var router = express.Router();
 var Campground = require('../models/campground');
 var middleware = require('../middleware');
 
-// INDEX - Show all Campgrounds
-router.get('/', function(req, res){
-    //Getting the campgrounds from de DB
+//INDEX - show all campgrounds
+router.get("/", function(req, res){
+    // Get all campgrounds from DB
     Campground.find({}, function(err, allCampgrounds){
-        if(err)
-            console.log(err);
-        else
-            res.render('campgrounds/index', {campgrounds: allCampgrounds});
+       if(err){
+           console.log(err);
+       } else {
+          res.render("campgrounds/index",{campgrounds: allCampgrounds, page: 'campgrounds'});
+       }
     });
 });
 
@@ -22,13 +23,15 @@ router.post('/', middleware.isLoggedIn , function(req, res){
     var author = {
         id: req.user._id,
         username: req.user.username
-    }
+    };
+    var price = req.body.price;
     
     var newCampgroud ={
       name: name,
       image: image,
       description: description,
-      author: author
+      author: author,
+      price: price
     };
     
     Campground.create(newCampgroud, function(err, callbackNewCampground){

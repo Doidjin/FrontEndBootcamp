@@ -12,15 +12,23 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
                 console.log(err);
                 res.redirect('back');
            } else {
+                // Added this block, to check if foundCampground exists, and if it doesn't to throw an error via connect-flash and send us back to the homepage
+                if (!foundCampground) {
+                        req.flash("error", "Item not found.");
+                        return res.redirect("back");
+                    }
+               
                // DOES THE USER OWN THE CAMPGROUND?
                 if(foundCampground.author.id.equals(req.user._id)){
                     next();                    
                 }else{
+                    req.flash("error", "You don't have permission to do that");
                     res.redirect("back");
                 }
            }
         });        
     } else {
+        req.flash("error", "You need to be logged in to do that");
         res.redirect("back");
     }
 }
@@ -30,18 +38,20 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
     if(req.isAuthenticated()) {
         Comment.findById(req.params.comment_id, function(err, foundComment){
            if(err) {
-                console.log(err);
+                req.flash("error", "Campground not found");
                 res.redirect('back');
            } else {
                // DOES THE USER OWN THE COMMENT?
                 if(foundComment.author.id.equals(req.user._id)){
                     next();                    
                 }else{
+                    req.flash("error", "You don't have permission to do that");
                     res.redirect("back");
                 }
            }
         });        
     } else {
+        req.flash("error", "You need to be logged in to do that");
         res.redirect("back");
     }
 }
@@ -50,9 +60,8 @@ middlewareObj.isLoggedIn = function(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    req.flash("error", "Please Login First");
-    res.redirect('/login');
-
+    req.flash("error", "You need to be logged in to do that");
+    res.redirect("/login");
 }
 
 module.exports = middlewareObj;
