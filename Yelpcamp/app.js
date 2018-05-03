@@ -19,7 +19,9 @@ var indexRoutes = require('./routes/index');
 
 
 //Creating the Connection
-mongoose.connect('mongodb://localhost/yelp_camp');
+//mongoose.connect('mongodb://localhost/yelp_camp');
+mongoose.connect('mongodb://Doidjin:Manesinho123@ds139619.mlab.com:39619/yelpcampv1');
+//mongodb://Doidjin:Manesinho123@ds139619.mlab.com:39619/yelpcampv1
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
